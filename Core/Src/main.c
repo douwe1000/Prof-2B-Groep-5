@@ -55,6 +55,7 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint32_t buffer [bufferbuffersize] = {0};
 
 /* USER CODE END 0 */
 
@@ -221,6 +222,11 @@ static void MX_GPIO_Init(void)
 	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 	{
 		HAL_GPIO_TogglePin(GPIOD, BLUELED_Pin);
+
+		if (htim->Instance == TIM2)
+		{
+
+		}
 	}
 /* USER CODE END 4 */
 
