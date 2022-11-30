@@ -218,7 +218,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-	void HAL_TIM_PeriodElapsedCalback(TIM_HandleTypeDef* htim)
+	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 	{
 		HAL_GPIO_TogglePin(GPIOD, BLUELED_Pin);
 	}
