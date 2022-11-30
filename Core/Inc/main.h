@@ -59,6 +59,10 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BLUELED_Pin GPIO_PIN_15
 #define BLUELED_GPIO_Port GPIOD
+#define idac_Pin GPIO_PIN_4
+#define idac_GPIO_Port GPIOD
+#define SS1_Pin GPIO_PIN_7
+#define SS1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
