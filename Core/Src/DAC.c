@@ -7,8 +7,10 @@
 
 #include "main.h"
 #include  <math.h>
+#include "settings.h"
 
-
+extern SPI_HandleTypeDef hspi1;
+__STATIC_INLINE void DWT_Delay_us(volatile uint32_t au32_microseconds);
 /*******************************************************************/
 /*   put_DA written by J.F. van der Bent
  *   2 aguments 0 -> select channel A 1 select channel B

@@ -1,0 +1,4 @@
+../Core/Src/DAC.c:23:6:Put_DA	24	static
+../Core/Src/DAC.c:52:6:Put__DA	32	static
+../Core/Src/DAC.c:82:22:DWT_Delay_us	24	static
+../Core/Src/DAC.c:89:10:DWT_Delay_Init	4	static,ignoring_inline_asm
