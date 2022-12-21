@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "settings.h"
+#include "dft.h"
 
 /* USER CODE END Includes */
 
@@ -75,6 +76,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -107,7 +109,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+dft();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -343,6 +345,7 @@ static void MX_GPIO_Init(void)
 			if (pos > buffersize) pos = 0;
 		}
 	}
+
 /* USER CODE END 4 */
 
 /**

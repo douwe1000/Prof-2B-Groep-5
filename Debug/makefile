@@ -60,8 +60,8 @@ all: main-build
 main-build: Prof-2B-Groep-5.elf secondary-outputs
 
 # Tool invocations
-Prof-2B-Groep-5.elf Prof-2B-Groep-5.map: $(OBJS) $(USER_OBJS) D:\Documents\stm32cubeide\Prof-2B-Groep-5\STM32F411VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Prof-2B-Groep-5.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Documents\stm32cubeide\Prof-2B-Groep-5\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Prof-2B-Groep-5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Prof-2B-Groep-5.elf Prof-2B-Groep-5.map: $(OBJS) $(USER_OBJS) C:\Users\Eger\Desktop\HU\ jaar\ 2\git\Prof-2B-Groep-5\STM32F411VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Prof-2B-Groep-5.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Eger\Desktop\HU jaar 2\git\Prof-2B-Groep-5\STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Prof-2B-Groep-5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
