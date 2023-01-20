@@ -8,6 +8,6 @@
 #ifndef INC_SETTINGS_H_
 #define INC_SETTINGS_H_
 
-#define buffersize 50
+#define buffersize 128
 
 #endif /* INC_SETTINGS_H_ */

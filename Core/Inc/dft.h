@@ -8,7 +8,7 @@
 #ifndef INC_DFT_H_
 #define INC_DFT_H_
 
-extern void dft();
+extern float dft();
 
 
 #endif /* INC_DFT_H_ */

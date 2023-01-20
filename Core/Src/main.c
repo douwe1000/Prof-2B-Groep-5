@@ -47,6 +47,8 @@ SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim2;
 
+UART_HandleTypeDef huart2;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -57,14 +59,24 @@ static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t buffer[buffersize];
+float buffer[buffersize];
 uint32_t pos = 0;
+int dft_waarde=0;
+float f1000hz = 0;
+float f2031hz = 0;
+float f3000hz = 0;
+float f4000hz = 0;
+int last3;
+int last1;
+int last2;
+int last4;
 
 /* USER CODE END 0 */
 
@@ -75,7 +87,8 @@ uint32_t pos = 0;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	  char buf5[] = "test\n";
+	HAL_UART_Transmit(&huart2, buf5, sizeof(buf5), HAL_MAX_DELAY);
 
   /* USER CODE END 1 */
 
@@ -100,6 +113,7 @@ int main(void)
   MX_TIM2_Init();
   MX_ADC1_Init();
   MX_SPI1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
@@ -108,8 +122,70 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+
+
+	  if (dft_waarde == 1){
+		  f2031hz = dft(12);
+		  f1000hz = dft(6);
+		  f3000hz = dft(21);
+		  f4000hz = dft(26);
+		  //for (int g=0; g<buffersize/2;g++) dft(g);
+		  dft_waarde = 0;
+
+
+		  if (f1000hz >= 200){
+			  if (last1 ==0)
+			  {
+				 char buf1[] = "1kHz\n";
+				 HAL_UART_Transmit(&huart2, buf1, sizeof(buf1), HAL_MAX_DELAY);
+				 last1 = 1;
+			  }
+		  }
+		  else last1 = 0;
+
+
+
+		  if (f2031hz >= 200){
+			  if (last2 == 0)
+			  {
+				  char buf2[] = "2kHz\n";
+				  HAL_UART_Transmit(&huart2, buf2, sizeof(buf2), HAL_MAX_DELAY);
+				  last2 = 1;
+			  }
+		  }
+		  else last2 = 0;
+
+
+		  if (f3000hz >= 200){
+			  if (last3 == 0)
+			  {
+				  HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+			  	  char buf3[] = "3kHz\n";
+			  	  HAL_UART_Transmit(&huart2, buf3, sizeof(buf3), HAL_MAX_DELAY);
+			  	  last3 = 1;
+			  }
+		  }
+		  else last3 = 0;
+
+
+		  if (f4000hz >= 200){
+			  if (last4 ==0)
+			  {
+				  char buf4[] = "4kHz\n";
+				  HAL_UART_Transmit(&huart2, buf4, sizeof(buf4), HAL_MAX_DELAY);
+				  last4 = 1;
+			  }
+		  }
+		  else last4 = 0;
+
+
+	  }
+
+
+
     /* USER CODE END WHILE */
-dft();
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -183,7 +259,7 @@ static void MX_ADC1_Init(void)
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
-  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc1.Init.Resolution = ADC_RESOLUTION_10B;
   hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
@@ -270,9 +346,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 32000;
+  htim2.Init.Prescaler = 32;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 100;
+  htim2.Init.Period = 50;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -293,6 +369,39 @@ static void MX_TIM2_Init(void)
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
 
 }
 
@@ -342,7 +451,13 @@ static void MX_GPIO_Init(void)
 			pos++;
 			buffer[(pos-1)] = HAL_ADC_GetValue(&hadc1);
 			HAL_ADC_Start(&hadc1);
-			if (pos > buffersize) pos = 0;
+			if (pos > buffersize)
+				{
+				dft_waarde = 1;
+				pos = 0;
+
+				}
+
 		}
 	}
 
