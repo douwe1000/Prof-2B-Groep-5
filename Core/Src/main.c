@@ -87,8 +87,7 @@ int last4;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	  char buf5[] = "test\n";
-	HAL_UART_Transmit(&huart2, buf5, sizeof(buf5), HAL_MAX_DELAY);
+
 
   /* USER CODE END 1 */
 
@@ -134,11 +133,13 @@ int main(void)
 		  dft_waarde = 0;
 
 
+
 		  if (f1000hz >= 200){
 			  if (last1 ==0)
 			  {
-				 char buf1[] = "1kHz\n";
-				 HAL_UART_Transmit(&huart2, buf1, sizeof(buf1), HAL_MAX_DELAY);
+				 int buf1waarde = round(f1000hz);
+				 uint8_t buf1[3];
+				// HAL_USART_Transmit(&husart2, (uint8_t*) buf1, sprintf(buf1, "%d", buf1waarde), HAL_MAX_DELAY);
 				 last1 = 1;
 			  }
 		  }
@@ -149,8 +150,9 @@ int main(void)
 		  if (f2031hz >= 200){
 			  if (last2 == 0)
 			  {
-				  char buf2[] = "2kHz\n";
-				  HAL_UART_Transmit(&huart2, buf2, sizeof(buf2), HAL_MAX_DELAY);
+				  int buf2waarde = round(f2031hz);
+				  uint8_t buf2[3];
+				 // HAL_USART_Transmit(&husart2, (uint8_t*) buf2, sprintf(buf2, "%d", buf2waarde), HAL_MAX_DELAY);
 				  last2 = 1;
 			  }
 		  }
@@ -160,9 +162,9 @@ int main(void)
 		  if (f3000hz >= 200){
 			  if (last3 == 0)
 			  {
-				  HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
-			  	  char buf3[] = "3kHz\n";
-			  	  HAL_UART_Transmit(&huart2, buf3, sizeof(buf3), HAL_MAX_DELAY);
+				  int buf3waarde = round(f3000hz);
+				  uint8_t buf3[3];
+				 // HAL_USART_Transmit(&husart2, (uint8_t*) buf3, sprintf(buf3, "%d", buf3waarde), HAL_MAX_DELAY);
 			  	  last3 = 1;
 			  }
 		  }
@@ -172,17 +174,23 @@ int main(void)
 		  if (f4000hz >= 200){
 			  if (last4 ==0)
 			  {
-				  char buf4[] = "4kHz\n";
-				  HAL_UART_Transmit(&huart2, buf4, sizeof(buf4), HAL_MAX_DELAY);
+				  int buf4waarde = round(f4000hz);
+				  uint8_t buf4[3];
+				 // HAL_UART_Transmit(&huart2, (uint8_t*) buf4, sprintf(buf4, "%d", buf4waarde), HAL_MAX_DELAY);
 				  last4 = 1;
 			  }
 		  }
 		  else last4 = 0;
 
 
+
+
 	  }
 
+	  uint8_t testbuf[] = {(round(f1000hz))/2,(round(f2031hz))/2, (round(f3000hz))/2, (round(f4000hz))/2 };
 
+	  HAL_UART_Transmit(&huart2, testbuf, sizeof(testbuf), HAL_MAX_DELAY);
+	  HAL_Delay(900);
 
     /* USER CODE END WHILE */
 
