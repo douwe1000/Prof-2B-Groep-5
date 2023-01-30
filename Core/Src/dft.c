@@ -37,3 +37,5 @@ float dft(int k)
 		  AmpX[k] = sqrt(ReX[k]*ReX[k] + ImX[k]*ImX[k]);//sterkte van signal per frequentie van k
 		  return AmpX[k];
 }
+
+

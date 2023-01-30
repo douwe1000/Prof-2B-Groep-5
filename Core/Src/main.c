@@ -77,6 +77,9 @@ int last3;
 int last1;
 int last2;
 int last4;
+int X_waarde = 64;//0-640 (links 0)
+int Y_waarde = 0;//0-480 (boven 0)
+uint8_t Sprite_kleur = 0;
 
 /* USER CODE END 0 */
 
@@ -122,24 +125,52 @@ int main(void)
   while (1)
   {
 
-
+	  Y_waarde = Y_waarde + 1;
+	  if (Y_waarde == 608) Y_waarde = 0;
 
 	  if (dft_waarde == 1){
 		  f2031hz = dft(12);
 		  f1000hz = dft(6);
 		  f3000hz = dft(21);
 		  f4000hz = dft(26);
-		  //for (int g=0; g<buffersize/2;g++) dft(g);
 		  dft_waarde = 0;
 
 
 
-		  if (f1000hz >= 200){
+	  //kies x waarde 64-224-384-544
+		  Sprite_kleur = 0;
+
+
+
+
+
+		  if (f1000hz >= 200){//1kHz ingedrukt
 			  if (last1 ==0)
 			  {
-				 int buf1waarde = round(f1000hz);
-				 uint8_t buf1[3];
-				// HAL_USART_Transmit(&husart2, (uint8_t*) buf1, sprintf(buf1, "%d", buf1waarde), HAL_MAX_DELAY);
+				  if((Y_waarde >350) && (Y_waarde< 410) )//sprite in de witte balk
+				  {
+					  Sprite_kleur += 64;//kleur wordt groen
+					  void display_send();
+
+				  }
+				  else
+				  {
+					  Sprite_kleur+= 128;//kleur wordt rood
+					  void display_send();
+//					  for(int k=0; k<10;k++)//laat de sprite trillen
+//					  {
+//						 X_waarde = X_waarde + 5;
+//						 void display_send();
+//						 HAL_Delay(80);
+//						 X_waarde = X_waarde - 5;
+//						 void display_send();
+//						 HAL_Delay(80);
+//					  }
+					  Y_waarde=0;//begin weer opnieuw
+				  }
+
+
+
 				 last1 = 1;
 			  }
 		  }
@@ -147,36 +178,101 @@ int main(void)
 
 
 
-		  if (f2031hz >= 200){
+
+		  if (f2031hz >= 200){//2kHz ingedrukt
 			  if (last2 == 0)
 			  {
-				  int buf2waarde = round(f2031hz);
-				  uint8_t buf2[3];
-				 // HAL_USART_Transmit(&husart2, (uint8_t*) buf2, sprintf(buf2, "%d", buf2waarde), HAL_MAX_DELAY);
+				  if((Y_waarde >350) && (Y_waarde< 410) )//sprite in de witte balk
+				  {
+					  Sprite_kleur+= 16;//kleur wordt groen
+					  void display_send();
+
+				  }
+				  else
+				  {
+					  Sprite_kleur+= 32;//kleur wordt rood
+					  void display_send();
+//					  for(int k=0; k<10;k++)//laat de sprite trillen
+//					  {
+//						 X_waarde = X_waarde + 5;
+//						 void display_send();
+//						 HAL_Delay(200);
+//						 X_waarde = X_waarde - 5;
+//						 void display_send();
+//						 HAL_Delay(80);
+//					  }
+					  Y_waarde=0;
+				  }
+
+
 				  last2 = 1;
 			  }
 		  }
 		  else last2 = 0;
 
 
-		  if (f3000hz >= 200){
+
+
+		  if (f3000hz >= 200){//3kHz ingedrukt
 			  if (last3 == 0)
 			  {
-				  int buf3waarde = round(f3000hz);
-				  uint8_t buf3[3];
-				 // HAL_USART_Transmit(&husart2, (uint8_t*) buf3, sprintf(buf3, "%d", buf3waarde), HAL_MAX_DELAY);
+				  if((Y_waarde >350) && (Y_waarde< 410) )//sprite in de witte balk
+				  {
+					  Sprite_kleur+= 4;//kleur wordt groen
+					  void display_send();
+
+				  }
+				  else
+				  {
+					  Sprite_kleur+= 8;//kleur wordt rood
+					  void display_send();
+//					  for(int k=0; k<10;k++)//laat de sprite trillen
+//					  {
+//						 X_waarde = X_waarde + 5;
+//						 void display_send();
+//						 HAL_Delay(200);
+//						 X_waarde = X_waarde - 5;
+//						 void display_send();
+//						 HAL_Delay(80);
+//					  }
+					  Y_waarde=0;
+				  }
+
+
 			  	  last3 = 1;
 			  }
 		  }
 		  else last3 = 0;
 
 
-		  if (f4000hz >= 200){
+
+		  if (f4000hz >= 200){//4kHz ingedrukt
 			  if (last4 ==0)
 			  {
-				  int buf4waarde = round(f4000hz);
-				  uint8_t buf4[3];
-				 // HAL_UART_Transmit(&huart2, (uint8_t*) buf4, sprintf(buf4, "%d", buf4waarde), HAL_MAX_DELAY);
+				  if((Y_waarde >350) && (Y_waarde< 410) )//sprite in de witte balk
+				  {
+					  Sprite_kleur+= 1;//kleur wordt groen
+					  void display_send();
+
+				  }
+				  else
+				  {
+					  Sprite_kleur+= 2;//kleur wordt rood
+					  void display_send();
+//					  for(int k=0; k<10;k++)//laat de sprute trillen
+//					  {
+//						 X_waarde = X_waarde + 5;
+//						 void display_send();
+//						 HAL_Delay(200);
+//						 X_waarde = X_waarde - 5;
+//						 void display_send();
+//						 HAL_Delay(80);
+//					  }
+					  Y_waarde=0;
+				  }
+
+
+
 				  last4 = 1;
 			  }
 		  }
@@ -184,13 +280,14 @@ int main(void)
 
 
 
-
 	  }
 
-	  uint8_t testbuf[] = {(round(f1000hz))/2,(round(f2031hz))/2, (round(f3000hz))/2, (round(f4000hz))/2 };
 
-	  HAL_USART_Transmit(&husart2, testbuf, sizeof(testbuf), HAL_MAX_DELAY);
-	 // HAL_Delay(900);
+	 //uint8_t outputbuf[] = {(round(f1000hz))/2,(round(f2031hz))/2, (round(f3000hz))/2, (round(f4000hz))/2 };
+	  uint8_t outputbuf[] = {X_waarde/3, Y_waarde/3, Sprite_kleur};
+	  HAL_USART_Transmit(&husart2, outputbuf, sizeof(outputbuf), HAL_MAX_DELAY);
+
+
 
     /* USER CODE END WHILE */
 
@@ -403,7 +500,7 @@ static void MX_USART2_Init(void)
   husart2.Init.Mode = USART_MODE_TX_RX;
   husart2.Init.CLKPolarity = USART_POLARITY_LOW;
   husart2.Init.CLKPhase = USART_PHASE_1EDGE;
-  husart2.Init.CLKLastBit = USART_LASTBIT_DISABLE;
+  husart2.Init.CLKLastBit = USART_LASTBIT_ENABLE;
   if (HAL_USART_Init(&husart2) != HAL_OK)
   {
     Error_Handler();
@@ -468,6 +565,13 @@ static void MX_GPIO_Init(void)
 				}
 
 		}
+	}
+
+	void display_send()
+	{
+		  uint8_t outputbuf[] = {X_waarde/3, Y_waarde/3, Sprite_kleur};
+		  HAL_USART_Transmit(&husart2, outputbuf, sizeof(outputbuf), HAL_MAX_DELAY);
+		  return;
 	}
 
 /* USER CODE END 4 */
